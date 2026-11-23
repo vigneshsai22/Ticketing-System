@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Frontdesk - High-Integrity Support Ticketing System
 
 Frontdesk is an enterprise support ticketing platform purpose-built for **Arvo Systems** (11 team members: 1 lead, 1 admin, 9 agents, handling ~40 high-stakes B2B incident tickets per day). 
@@ -260,3 +261,6 @@ And start command:
 ```bash
 node apps/api/dist/index.js
 ```
+=======
+# Ticketing-System
+>>>>>>> f5dc48d1255b472e3ddb5733a73f890d8eac0216
