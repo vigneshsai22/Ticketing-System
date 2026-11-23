@@ -1,0 +1,44 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "rules": {
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "NewExpression[callee.name='Date'][arguments.length=0]",
+        "message": "Direct instantiation of 'new Date()' without arguments is prohibited outside the Clock module. Use the injectable Clock service (e.g. clock.now()) to support the Time Machine."
+      },
+      {
+        "selector": "CallExpression[callee.object.name='Date'][callee.property.name='now']",
+        "message": "Direct invocation of 'Date.now()' is prohibited outside the Clock module. Use the injectable Clock service (e.g. clock.now().getTime()) to support the Time Machine."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "packages/shared/src/clock/**",
+        "**/*.test.ts",
+        "**/*.spec.ts"
+      ],
+      "rules": {
+        "no-restricted-syntax": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "dist",
+    "node_modules",
+    "*.config.js",
+    "*.config.ts"
+  ]
+}

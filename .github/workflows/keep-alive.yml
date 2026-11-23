@@ -1,0 +1,23 @@
+name: Free-Tier Keep-Alive Ping
+
+on:
+  schedule:
+    # Run every 10 minutes to prevent free hosts (Render, Koyeb, Railway) from sleeping
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Frontdesk Health Endpoint
+        run: |
+          URL="${{ secrets.LIVE_APP_URL || 'https://frontdesk.onrender.com' }}/api/health"
+          echo "Pinging $URL..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || echo "failed")
+          echo "Received HTTP status: $STATUS"
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 400 ]; then
+            echo "Service is healthy and active!"
+          else
+            echo "Warning: Received unexpected status $STATUS"
+          fi
